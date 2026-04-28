@@ -1,7 +1,7 @@
 from flask import jsonify, request
 from marshmallow import ValidationError
 
-from extensions import db
+from extensions import cache, db
 from models import Mechanic
 from app.mechanics import mechanics_bp
 from app.mechanics.schemas import MechanicSchema
@@ -26,7 +26,9 @@ def create_mechanic():
 
 
 @mechanics_bp.get("/")
+@cache.cached(timeout=60)
 def get_mechanics():
+    # Cache this list briefly because mechanics are read often and do not change constantly.
     mechanics = Mechanic.query.all()
     return mechanics_schema.dump(mechanics), 200
 

@@ -1,7 +1,7 @@
 from flask import jsonify, request
 from marshmallow import ValidationError
 
-from extensions import db
+from extensions import db, limiter
 from models import Mechanic, ServiceTicket
 from app.service_tickets import service_tickets_bp
 from app.service_tickets.schemas import ServiceTicketSchema
@@ -17,7 +17,9 @@ def handle_validation_error(error):
 
 
 @service_tickets_bp.post("/")
+@limiter.limit("5 per minute")
 def create_service_ticket():
+    # Limit ticket creation to reduce spam or accidental repeated submissions.
     service_ticket_data = service_ticket_schema.load(request.get_json())
     new_service_ticket = ServiceTicket(**service_ticket_data)
     db.session.add(new_service_ticket)
