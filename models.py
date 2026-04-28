@@ -8,6 +8,7 @@ class Customer(db.Model):
     last_name = db.Column(db.String(50), nullable=False)
     phone = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(225), nullable=False)
     address = db.Column(db.String(255), nullable=False)
     vehicles = db.relationship("Vehicle", backref="customer")
     service_tickets = db.relationship("ServiceTicket", backref="customer")
