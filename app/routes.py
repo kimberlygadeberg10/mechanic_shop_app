@@ -58,8 +58,16 @@ def register_routes(app):
 
     @app.get("/customers")
     def get_customers():
-        customers = Customer.query.all()
-        return customers_schema.dump(customers), 200
+        page = request.args.get("page", 1, type=int)
+        per_page = request.args.get("per_page", 5, type=int)
+        customers = Customer.query.paginate(page=page, per_page=per_page, error_out=False)
+        
+        return jsonify({
+            "customers": customers_schema.dump(customers.items),
+            "total": customers.total,
+            "pages": customers.pages,
+            "current_page": customers.page
+        }), 200
 
     @app.get("/customers/<int:customer_id>")
     def get_customer(customer_id):

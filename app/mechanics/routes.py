@@ -2,7 +2,7 @@ from flask import jsonify, request
 from marshmallow import ValidationError
 
 from extensions import cache, db
-from models import Mechanic
+from models import Mechanic, ServiceMechanic
 from app.mechanics import mechanics_bp
 from app.mechanics.schemas import MechanicSchema
 
@@ -51,3 +51,14 @@ def delete_mechanic(mechanic_id):
     db.session.delete(mechanic)
     db.session.commit()
     return jsonify({"message": f"Mechanic {mechanic_id} deleted successfully."}), 200
+
+@mechanics_bp.get("/most-active")
+def get_most_active_mechanics():
+    mechanics = (
+        db.session.query(Mechanic)
+        .join(ServiceMechanic, Mechanic.mechanic_id == ServiceMechanic.mechanic_id)
+        .group_by(Mechanic.mechanic_id)
+        .order_by(db.func.count(ServiceMechanic.ticket_id).desc())
+        .all()
+    )
+    return mechanics_schema.dump(mechanics), 200
