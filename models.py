@@ -1,5 +1,11 @@
 from extensions import db
 
+service_ticket_inventory = db.Table(
+    "service_ticket_inventory",
+    db.Column("ticket_id", db.Integer, db.ForeignKey("service_tickets.ticket_id"), primary_key=True),
+    db.Column("inventory_id", db.Integer, db.ForeignKey("inventory.id"), primary_key=True)
+)
+
 class Customer(db.Model):
     __tablename__ = "customers"
     
@@ -40,6 +46,7 @@ class ServiceTicket(db.Model):
     total_cost = db.Column(db.Numeric(10, 2), nullable=False)
     service_mechanics = db.relationship("ServiceMechanic", backref="service_ticket")
     mechanics = db.relationship("Mechanic", secondary="service_mechanics", back_populates="service_tickets")
+    inventory = db.relationship("Inventory", secondary=service_ticket_inventory, back_populates="service_tickets")
     
 class Mechanic(db.Model):
     __tablename__="mechanics"
@@ -60,3 +67,11 @@ class ServiceMechanic(db.Model):
     ticket_id = db.Column(db.Integer, db.ForeignKey("service_tickets.ticket_id"), primary_key=True)
     mechanic_id = db.Column(db.Integer, db.ForeignKey("mechanics.mechanic_id"), primary_key=True)
     hours_worked = db.Column(db.Numeric(5, 2), nullable=True)
+
+class Inventory(db.Model):
+    __tablename__="inventory"
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    service_tickets = db.relationship("ServiceTicket", secondary=service_ticket_inventory, back_populates="inventory")
