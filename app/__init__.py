@@ -3,6 +3,7 @@ from extensions import cache, db, limiter
 from app.routes import register_routes
 from app.mechanics import mechanics_bp
 from app.service_tickets import service_tickets_bp
+from app.inventory import inventory_bp
 
 def create_app():
     app = Flask(__name__)
@@ -10,6 +11,7 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["CACHE_TYPE"] = "SimpleCache"
     app.config["CACHE_DEFAULT_TIMEOUT"] = 60
+    
     
     db.init_app(app)
     cache.init_app(app)
@@ -23,5 +25,6 @@ def create_app():
     register_routes(app)
     app.register_blueprint(mechanics_bp, url_prefix="/mechanics")
     app.register_blueprint(service_tickets_bp, url_prefix="/service-tickets")
-        
+    app.register_blueprint(inventory_bp, url_prefix="/inventory")   
+     
     return app
