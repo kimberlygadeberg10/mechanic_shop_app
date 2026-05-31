@@ -21,7 +21,6 @@ ordered-set==4.1.0
 packaging==26.2
 psycopg2-binary==2.9.12
 pyasn1==0.6.3
-python-dotenv==1.2.2
 python-jose==3.5.0
 rsa==4.9.1
 six==1.17.0
