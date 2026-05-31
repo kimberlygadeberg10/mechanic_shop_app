@@ -17,7 +17,7 @@ from app.service_tickets import service_tickets_bp
 # Production configuration for Render
 class ProductionConfig:
     SQLALCHEMY_DATABASE_URI = os.getenv(
-        "DATABASE_URL",
+        "https://mechanic-shop-api-xppo.onrender.com/",
         "mysql+mysqlconnector://root:Phoenix0350%23@localhost/mechanic_shop_db"
     )
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
@@ -27,7 +27,7 @@ class ProductionConfig:
 # Development configuration for running locally
 class DevelopmentConfig:
     SQLALCHEMY_DATABASE_URI = os.getenv(
-        "DATABASE_URL",
+        "https://mechanic-shop-api-xppo.onrender.com/",
         "mysql+mysqlconnector://root:Phoenix0350%23@localhost/mechanic_shop_db"
     )
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
@@ -78,7 +78,9 @@ def create_app(config_class=DevelopmentConfig):
     @app.route("/")
     def home():
         return {
-            "message": "Welcome to the Mechanic Shop API"
+            "message": "Welcome to the Mechanic Shop API",
+            "status": "deployed successfully",
+            "documentation": "/api/docs"
         }, 200
 
     # ---------------------------------------------------------
