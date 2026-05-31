@@ -82,9 +82,9 @@ def create_app(config_class=DevelopmentConfig):
     # REGISTER BLUEPRINTS
     # ---------------------------------------------------------
 
-    app.register_blueprint(mechanics_bp)
-    app.register_blueprint(inventory_bp)
-    app.register_blueprint(service_tickets_bp)
+    app.register_blueprint(mechanics_bp, url_prefix="/mechanics")
+    app.register_blueprint(inventory_bp, url_prefix="/inventory")
+    app.register_blueprint(service_tickets_bp, url_prefix="/service-tickets")
 
     # ---------------------------------------------------------
     # CREATE DATABASE TABLES
