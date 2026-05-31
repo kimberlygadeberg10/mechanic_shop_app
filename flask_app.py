@@ -22,6 +22,7 @@ class ProductionConfig:
     )
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    CACHE_TYPE = "SimpleCache"
 
 # Development configuration for running locally
 class DevelopmentConfig:
@@ -78,7 +79,7 @@ def create_app(config_class=DevelopmentConfig):
     def home():
         return {
             "message": "Welcome to the Mechanic Shop API"
-        }
+        }, 200
 
     # ---------------------------------------------------------
     # CREATE DATABASE TABLES
