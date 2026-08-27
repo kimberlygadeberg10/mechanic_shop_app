@@ -1,83 +1,80 @@
 # Mechanic Shop API
 
-This project is a Flask API for a small mechanic shop. It uses the Application Factory Pattern, Flask-SQLAlchemy, Marshmallow schemas, and MySQL.
+A RESTful API built with Flask for managing customers, mechanics, service tickets, and inventory for a mechanic shop.
 
-## Features
+## Key Features
 
-- Customer CRUD routes
-- Mechanic CRUD routes
-- Service ticket create and list routes
-- Assign a mechanic to a service ticket
-- Remove a mechanic from a service ticket
+* Customer management
+* Mechanic management
+* Service ticket creation and tracking
+* Assign and remove mechanics from service tickets
+* Inventory management
+* API documentation with Swagger
+* Automated testing
+* Postman collection for endpoint testing
 
-## Project Structure
+## Technologies Used
+
+* Python
+* Flask
+* Flask-SQLAlchemy
+* Marshmallow
+* MySQL
+* PostgreSQL
+* Swagger
+* Unittest
+* Gunicorn
+* GitHub Actions
+
+## API Documentation
+
+Swagger documentation is available while the application is running at:
 
 ```text
-mechanic_shop_app/
-├── app/
-│   ├── __init__.py
-│   ├── routes.py
-│   ├── mechanics/
-│   │   ├── __init__.py
-│   │   ├── routes.py
-│   │   └── schemas.py
-│   └── service_tickets/
-│       ├── __init__.py
-│       ├── routes.py
-│       └── schemas.py
-├── app.py
-├── extensions.py
-├── models.py
-├── schemas.py
-└── Mechanic Shop API.postman_collection.json
+http://127.0.0.1:5000/api/docs
 ```
 
-## Setup
+## Run Locally
 
-1. Create and activate a virtual environment.
-2. Install dependencies:
+Create and activate a virtual environment:
 
 ```bash
-pip install flask flask-sqlalchemy mysql-connector-python marshmallow
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-3. Create a MySQL database named `mechanic_shop_db`.
-4. Update the database connection string in `app/__init__.py` with your MySQL credentials.
-5. Run the app:
+Install dependencies:
 
 ```bash
-python3 app.py
+pip install -r requirements.txt
 ```
 
-The app runs at `http://127.0.0.1:5000`.
+Start the application:
 
-## Main Endpoints
+```bash
+flask --app flask_app run
+```
 
-### Customers
+The API will run at:
 
-- `GET /customers`
-- `POST /customers`
-- `PUT /customers/<customer_id>`
-- `DELETE /customers/<customer_id>`
-
-### Mechanics
-
-- `GET /mechanics/`
-- `POST /mechanics/`
-- `PUT /mechanics/<mechanic_id>`
-- `DELETE /mechanics/<mechanic_id>`
-
-### Service Tickets
-
-- `GET /service-tickets/`
-- `POST /service-tickets/`
-- `PUT /service-tickets/<ticket_id>/assign-mechanic/<mechanic_id>`
-- `PUT /service-tickets/<ticket_id>/remove-mechanic/<mechanic_id>`
+```text
+http://127.0.0.1:5000
+```
 
 ## Testing
 
-Postman requests for the API are included in:
+Run the automated tests with:
 
-`Mechanic Shop API.postman_collection.json`
+```bash
+python3 -m unittest discover tests
+```
 
-Import that collection into Postman to test the routes.
+A Postman collection is also included for manual API testing.
+
+## What I Learned
+
+This project helped me strengthen my experience with REST API development, database integration, Flask application structure, API documentation, automated testing, and deployment preparation.
+
+## Author
+
+Created by Kimberly Gadeberg.
